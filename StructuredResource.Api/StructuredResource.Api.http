@@ -1,0 +1,6 @@
+@StructuredResource.Api_HostAddress = http://localhost:5230
+
+GET {{StructuredResource.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

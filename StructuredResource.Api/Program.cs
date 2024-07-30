@@ -1,0 +1,42 @@
+using Microsoft.EntityFrameworkCore;
+using StructuredResource.Api.Data;
+using StructuredResource.Api.Mappings;
+using StructuredResource.Api.Repositories;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IRegionRepository, MySQLRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, MySQLWalkRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
+//builder.Services.AddDbContext<StructuredDbContext>(options =>
+//options.UseMySql(builder.Configuration.GetConnectionString("StructuredConnectionString")));
+
+   builder.Services.AddDbContext<StructuredDbContext>(options =>
+        options.UseMySql(builder.Configuration.GetConnectionString("StructuredConnectionString"), new MySqlServerVersion(new Version(8, 0, 21))));
+
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
