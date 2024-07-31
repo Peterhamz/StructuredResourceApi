@@ -34,18 +34,21 @@ namespace StructuredResource.Api.Controllers
 
         }
 
-        //Get walks 
+        //Get all walks 
         [HttpGet]
-        public async Task<IActionResult> GetWalks()
+        public async Task<IActionResult> GetWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000 )
         {
-            var walkDomain = await walkRepository.GetAllAsync();
+            var walkDomain = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, 
+                pageNumber, pageSize);
 
             return Ok(mapper.Map<List<WalkDto>>(walkDomain));
         }
 
         // Get Walks by ID
         [HttpGet]
-        [Route("{id:Guid}")]
+        [Route("{id:Guid}")] 
         public async Task<IActionResult> GetWalkByIdAsync([FromRoute] Guid id)
         {
             var walkDomain = await walkRepository.GetWalkByIdAsync(id);

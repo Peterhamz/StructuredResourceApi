@@ -32,9 +32,38 @@ namespace StructuredResource.Api.Repositories
             return existingWalk;
         }
 
-        public Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(String? filterOn = null, String? filterQuery = null,
+            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
         {
-            return structuredDbContext.Walks.Include("Region").Include("Difficulty").ToListAsync();
+            var walks = structuredDbContext.Walks.Include("Region").Include("Difficulty").AsQueryable();
+
+            // filtering 
+            if(string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                if(filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(x => x.Name.Contains(filterQuery));
+                }
+            }
+
+            //Sorting
+            if(string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if(sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                } else if(sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm);
+                }
+            }
+
+            //Pagination
+            var skipResult = (pageNumber - 1) * pageSize;
+
+             
+            return await walks.Skip(skipResult).Take(pageSize).ToListAsync();
+            //return structuredDbContext.Walks.Include("Region").Include("Difficulty").ToListAsync();
         }
 
         public async Task<Walk?> GetWalkByIdAsync(Guid walkId)
