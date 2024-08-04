@@ -5,7 +5,7 @@ namespace StructuredResource.Api.Data
 {
     public class StructuredDbContext: DbContext
     {
-        public StructuredDbContext(DbContextOptionsBuilder db)
+        public StructuredDbContext(DbContextOptionsBuilder<StructuredDbContext> db)
         {
             db.UseMySql("Server=localhost;Database=structuredDb;User=root;Password=@Jamespeter16;", new MySqlServerVersion(new Version(8, 0, 21)));
 
@@ -18,6 +18,7 @@ namespace StructuredResource.Api.Data
         public DbSet<Difficulty> Difficulties { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walk> Walks { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StructuredResource.Api.Data;
 using StructuredResource.Api.Models.Domain;
@@ -25,6 +26,7 @@ namespace StructuredResource.Api.Controllers
 
         // Get All Region method and controller
         [HttpGet]
+        [Authorize(Roles ="Reader,Writer")]
         public async Task<IActionResult> GetAllRegion()
         {
             // get the entity from the database
@@ -50,6 +52,7 @@ namespace StructuredResource.Api.Controllers
         // Get Region by Id
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetRegionById([FromRoute] Guid id)
         {
             // var region = dbContext.Regions.Find(id);
@@ -67,6 +70,7 @@ namespace StructuredResource.Api.Controllers
 
         //Create a region Controller and implementation
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
 
@@ -91,6 +95,7 @@ namespace StructuredResource.Api.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             if (ModelState.IsValid)
@@ -119,6 +124,7 @@ namespace StructuredResource.Api.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
             // check if region exist

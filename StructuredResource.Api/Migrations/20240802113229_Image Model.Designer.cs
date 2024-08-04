@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StructuredResource.Api.Data;
 
@@ -11,9 +12,11 @@ using StructuredResource.Api.Data;
 namespace StructuredResource.Api.Migrations
 {
     [DbContext(typeof(StructuredDbContext))]
-    partial class StructuredDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240802113229_Image Model")]
+    partial class ImageModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
