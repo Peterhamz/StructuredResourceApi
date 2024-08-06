@@ -5,6 +5,7 @@ using StructuredResource.Api.Data;
 using StructuredResource.Api.Models.Domain;
 using StructuredResource.Api.Models.DTO;
 using StructuredResource.Api.Repositories;
+using System.Text.Json;
 
 namespace StructuredResource.Api.Controllers
 {
@@ -15,20 +16,24 @@ namespace StructuredResource.Api.Controllers
         private readonly StructuredDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
         public RegionsController(StructuredDbContext dbContext, IRegionRepository regionRepository, 
-            IMapper mapper)
+            IMapper mapper, ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         // Get All Region method and controller
         [HttpGet]
-        [Authorize(Roles ="Reader,Writer")]
+       // [Authorize(Roles ="Reader,Writer")]
         public async Task<IActionResult> GetAllRegion()
         {
+
+            logger.LogInformation("GetAll region Action method was invoked");
             // get the entity from the database
 
             var regionsDomain = await regionRepository.GetAllAsync();
@@ -46,13 +51,15 @@ namespace StructuredResource.Api.Controllers
             //        RegionImageUrl = regionDomain.RegionImageUrl
             //    });
             //}
+            logger.LogInformation($"Regions: {JsonSerializer.Serialize(regionsDomain)}");
+
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain)); 
         }
 
         // Get Region by Id
         [HttpGet]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader,Writer")]
+        //[Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetRegionById([FromRoute] Guid id)
         {
             // var region = dbContext.Regions.Find(id);
@@ -70,7 +77,7 @@ namespace StructuredResource.Api.Controllers
 
         //Create a region Controller and implementation
         [HttpPost]
-        [Authorize(Roles = "Writer")]
+      //  [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
 
@@ -95,7 +102,7 @@ namespace StructuredResource.Api.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
+       // [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             if (ModelState.IsValid)
@@ -124,7 +131,7 @@ namespace StructuredResource.Api.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
+       // [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
         {
             // check if region exist

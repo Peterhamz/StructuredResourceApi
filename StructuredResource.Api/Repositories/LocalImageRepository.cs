@@ -20,7 +20,7 @@ namespace StructuredResource.Api.Repositories
         {
 
             var localFilePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images",
-                image.FileName, image.FileExtension);
+                $"{image.FileName}{ image.FileExtension}");
 
             // upload image to local path
             using var stream = new FileStream(localFilePath, FileMode.Create);

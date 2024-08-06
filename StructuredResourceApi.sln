@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructuredResource.Api", "StructuredResource.Api\StructuredResource.Api.csproj", "{25E20745-A6AD-4397-A068-A703DD1C73C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructuredResource.Api", "StructuredResource.Api\StructuredResource.Api.csproj", "{25E20745-A6AD-4397-A068-A703DD1C73C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructuredUI", "StructuredUI\StructuredUI.csproj", "{2E733376-936B-4BA9-AB6A-7730947343BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{25E20745-A6AD-4397-A068-A703DD1C73C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E20745-A6AD-4397-A068-A703DD1C73C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E20745-A6AD-4397-A068-A703DD1C73C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E733376-936B-4BA9-AB6A-7730947343BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E733376-936B-4BA9-AB6A-7730947343BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E733376-936B-4BA9-AB6A-7730947343BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E733376-936B-4BA9-AB6A-7730947343BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

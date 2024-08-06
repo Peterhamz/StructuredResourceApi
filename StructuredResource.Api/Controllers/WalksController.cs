@@ -43,8 +43,11 @@ namespace StructuredResource.Api.Controllers
             var walkDomain = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, 
                 pageNumber, pageSize);
 
+            throw new Exception("This is a new exception");
+
             return Ok(mapper.Map<List<WalkDto>>(walkDomain));
         }
+
 
         // Get Walks by ID
         [HttpGet]
